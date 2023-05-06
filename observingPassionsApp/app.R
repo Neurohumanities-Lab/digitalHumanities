@@ -9,6 +9,7 @@ library(highcharter)
 library(shinythemes)
 library(wordcloud2)
 
+#charge your files
 allPassionsBind <- readRDS("data/allPassionsBind.rds")
 passionsSep <- readRDS("data/passionsSep.rds")
 passionsHSankey <- readRDS("data/passionsHSankey.rds")
@@ -95,7 +96,7 @@ ui <- navbarPage(id="tabs",
                HTML("<br><br><a rel='license' href='http://creativecommons.org/licenses/by-nc-sa/4.0/'><img alt='Creative Commons License' style='border-width:0' src='https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png' /></a>
   <br />This App is licensed under a <a rel='license' href='http://creativecommons.org/licenses/by-nc-sa/4.0/'>Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.<br>It has been developed as part of the project 
               <a href='https://sway.office.com/OPIQZJ5peGHC6QmD?ref=Link' target='_blank'>Neurohumanities Lab. Engaging Experiences for Human Flourishing</a> by 
-              <a href='https://github.com/mancebral' target='_blank'>mancebral</a>, in the context of the Challenge-Based Research Funding Program 
+              <a href='https://github.com/mancebral/neurohumanitiesLab/tree/main/observingPassionsApp' target='_blank'>mancebral</a>, in the context of the Challenge-Based Research Funding Program 
                     of <a href='https://tec.mx/en' target='_blank'>Tecnológico de Monterrey</a>.<br><br>")
         )
     ),
@@ -117,7 +118,7 @@ ui <- navbarPage(id="tabs",
   HTML("<br><br><a rel='license' href='http://creativecommons.org/licenses/by-nc-sa/4.0/'><img alt='Creative Commons License' style='border-width:0' src='https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png' /></a>
     <br />This App is licensed under a <a rel='license' href='http://creativecommons.org/licenses/by-nc-sa/4.0/'>Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.<br>It has been developed as part of the project 
               <a href='https://sway.office.com/OPIQZJ5peGHC6QmD?ref=Link' target='_blank'>Neurohumanities Lab. Engaging Experiences for Human Flourishing</a> by 
-              <a href='https://github.com/mancebral' target='_blank'>mancebral</a>, in the context of the Challenge-Based Research Funding Program 
+              <a href='https://github.com/mancebral/neurohumanitiesLab/tree/main/observingPassionsApp' target='_blank'>mancebral</a>, in the context of the Challenge-Based Research Funding Program 
                     of <a href='https://tec.mx/en' target='_blank'>Tecnológico de Monterrey</a>.<br><br>")
     )
   ),
@@ -145,7 +146,7 @@ ui <- navbarPage(id="tabs",
                   HTML("<br><br><a rel='license' href='http://creativecommons.org/licenses/by-nc-sa/4.0/'><img alt='Creative Commons License' style='border-width:0' src='https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png' /></a>
   <br />This App is licensed under a <a rel='license' href='http://creativecommons.org/licenses/by-nc-sa/4.0/'>Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.<br>It has been developed as part of the project 
               <a href='https://sway.office.com/OPIQZJ5peGHC6QmD?ref=Link' target='_blank'>Neurohumanities Lab. Engaging Experiences for Human Flourishing</a> by 
-              <a href='https://github.com/mancebral' target='_blank'>mancebral</a>, in the context of the Challenge-Based Research Funding Program 
+              <a href='https://github.com/mancebral/neurohumanitiesLab/tree/main/observingPassionsApp' target='_blank'>mancebral</a>, in the context of the Challenge-Based Research Funding Program 
                     of <a href='https://tec.mx/en' target='_blank'>Tecnológico de Monterrey</a>.<br><br>")
                   )
   ), 
@@ -164,7 +165,7 @@ ui <- navbarPage(id="tabs",
                   HTML("<br><br><a rel='license' href='http://creativecommons.org/licenses/by-nc-sa/4.0/'><img alt='Creative Commons License' style='border-width:0' src='https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png' /></a>
   <br />This App is licensed under a <a rel='license' href='http://creativecommons.org/licenses/by-nc-sa/4.0/'>Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.<br>It has been developed as part of the project 
               <a href='https://sway.office.com/OPIQZJ5peGHC6QmD?ref=Link' target='_blank'>Neurohumanities Lab. Engaging Experiences for Human Flourishing</a> by 
-              <a href='https://github.com/mancebral' target='_blank'>mancebral</a>, in the context of the Challenge-Based Research Funding Program 
+              <a href='https://github.com/mancebral/neurohumanitiesLab/tree/main/observingPassionsApp' target='_blank'>mancebral</a>, in the context of the Challenge-Based Research Funding Program 
                     of <a href='https://tec.mx/en' target='_blank'>Tecnológico de Monterrey</a>.<br><br>")
                   )
            )
@@ -360,8 +361,9 @@ server <- function(input, output) {
         group_by(Date, text, Genre=Subgenre) %>% 
         summarize(value=sum(value)) %>% 
         ungroup() %>% 
-        ggplot(aes(Date, value, color=Genre, text=text, size=value))+
-        geom_point()+
+        ggplot()+
+        geom_point(aes(Date, value, color=Genre, text=text, size=value))+
+        geom_line(aes(Date, value, color=Genre))+
         scale_color_manual(values=rev(c("#fde725","#7ad151","#22a884","#2a788e",
                                         "#414487","#440154")))+
         xlab("")+
@@ -377,3 +379,4 @@ server <- function(input, output) {
     }
 # Run the application 
 shinyApp(ui = ui, server = server)
+
